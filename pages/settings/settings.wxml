@@ -1,0 +1,89 @@
+<!-- 节拍与音色设置 v0.8 — 音符图标 + 动态切分选项 -->
+<view class="page">
+
+  <!-- ====== 拍号 ====== -->
+  <view class="card">
+    <view class="card-head">拍号</view>
+    <view class="form-row">
+      <text class="form-label">每小节拍数</text>
+      <view class="chip-row">
+        <view wx:for="{{meterOpts}}" wx:key="*this"
+          class="chip {{beatsPerBar === item ? 'on' : ''}}"
+          bindtap="setMeter" data-v="{{item}}">{{item}}</view>
+      </view>
+    </view>
+    <view class="form-row">
+      <text class="form-label">一拍等于</text>
+      <view class="note-chip-row">
+        <view wx:for="{{unitOpts}}" wx:key="v"
+          class="note-chip {{beatUnit === item.v ? 'on' : ''}}"
+          bindtap="setUnit" data-v="{{item.v}}">
+          <view class="note-icon {{item.iconClass}}">
+            <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+            <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+          </view>
+          <text class="chip-label">{{item.n}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 切分音符 ====== -->
+  <view class="card">
+    <view class="card-head">切分音符</view>
+    <view class="note-chip-row">
+      <view wx:for="{{subOpts}}" wx:key="v"
+        class="note-chip {{subdivision === item.v ? 'on' : ''}}"
+        bindtap="setSub" data-v="{{item.v}}">
+        <view wx:if="{{item.isTriplet}}" class="triplet-note">
+          <view class="note-icon {{item.iconClass}}">
+            <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+            <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+          </view>
+          <text class="triplet-badge">3</text>
+        </view>
+        <view wx:else class="note-icon {{item.iconClass}}">
+          <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+          <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+        </view>
+        <text class="chip-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ====== 重音 ====== -->
+  <view class="card">
+    <view class="card-head">重音设置<text class="hint">点击切换</text></view>
+    <view class="accent-row">
+      <view wx:for="{{accents}}" wx:key="index"
+        class="accent-btn {{item}}"
+        bindtap="cycleAccent" data-i="{{index}}">
+        {{index + 1}}
+      </view>
+    </view>
+    <view class="legend">
+      <text><view class="leg-dot a"></view>重音</text>
+      <text><view class="leg-dot n"></view>普通</text>
+      <text><view class="leg-dot m"></view>静音</text>
+    </view>
+  </view>
+
+  <!-- ====== 音效 ====== -->
+  <view class="card">
+    <view class="card-head">音效</view>
+    <view class="chip-row">
+      <view wx:for="{{soundOpts}}" wx:key="v"
+        class="chip {{sound === item.v ? 'on' : ''}}"
+        bindtap="setSound" data-v="{{item.v}}">{{item.n}}</view>
+    </view>
+  </view>
+
+  <!-- ====== 音量 ====== -->
+  <view class="card">
+    <view class="card-head">音量 {{volumePercent}}%</view>
+    <slider min="0" max="100" value="{{volumePercent}}" bindchange="onVolume"
+      block-size="18" activeColor="#7ed8ff" backgroundColor="rgba(126,216,255,0.12)" show-value />
+  </view>
+
+  <view class="bottom-spacer"></view>
+</view>

@@ -1,0 +1,212 @@
+<!-- 节拍器首页 v1.3 — 底部抽屉 + 无TabBar + 设置按钮放大 -->
+<view class="page {{isPlaying ? 'is-running' : ''}}">
+
+  <!-- 顶部信息栏 -->
+  <view class="top-bar">
+    <view class="status-dot {{isPlaying ? 'on' : ''}}"></view>
+    <text class="meter-tag">{{meterLabel}}</text>
+    <text class="unit-tag">{{beatUnitLabel}}</text>
+    <view class="settings-toggle" bindtap="onToggleSettings">
+      <text class="gear-icon">⚙</text>
+      <text class="gear-label">设置</text>
+    </view>
+  </view>
+
+  <!-- ====== 仿真节拍器 ====== -->
+  <view class="metro-stage">
+    <view class="metro-outline"></view>
+    <view class="metro-body"></view>
+    <view class="wood-grain"></view>
+    <view class="glass-cover"></view>
+    <!-- <view class="brand-plate">Rhythm 02</view> -->
+    <view class="metro-scale">
+      <view class="scale-item"><view class="scale-dash"></view><text></text></view>
+      <view class="scale-item"><view class="scale-dash"></view><text></text></view>
+      <view class="scale-item"><view class="scale-dash"></view><text></text></view>
+      <view class="scale-item"><view class="scale-dash"></view><text></text></view>
+      <view class="scale-item"><view class="scale-dash"></view><text></text></view>
+    </view>
+    <view class="winder"></view>
+    <view class="pendulum-wrap">
+      <view class="pendulum" style="{{armStyle}}">
+        <view class="pendulum-rod"></view>
+        <view class="pendulum-weight" style="top: {{weightPosition}}%"></view>
+      </view>
+    </view>
+    <view class="pivot-cap"></view>
+    <view class="metro-face">
+      <view class="bpm-display" bindtap="onBpmTap">
+        <text class="bpm-num">{{bpm}}</text>
+        <text class="bpm-label">BPM · {{beatUnitLabel}}</text>
+      </view>
+      <view class="meter-badge">{{meterLabel}}</view>
+    </view>
+    <view class="metro-base"></view>
+  </view>
+
+  <!-- 节拍圆点行 -->
+  <view class="dots-row">
+    <view wx:for="{{beatCells}}" wx:key="index"
+      class="dot {{item.accent ? 'accent' : ''}} {{item.mute ? 'mute' : ''}} {{activeBeat === index + 1 ? (item.accent ? 'hit-accent' : 'hit') : ''}}">
+    </view>
+  </view>
+
+  <!-- BPM 编辑弹层 -->
+  <view wx:if="{{editingBpm}}" class="bpm-overlay" bindtap="closeBpmEdit">
+    <view class="bpm-card" catchtap="">
+      <text class="bpm-card-title">设置 BPM</text>
+      <input class="bpm-card-input" type="number" value="{{bpm}}" focus bindchange="onBpmEdit" />
+      <text class="bpm-card-range">范围 30 – 260</text>
+    </view>
+  </view>
+
+  <!-- 微调控制 -->
+  <view class="bpm-tuner">
+    <view class="tuner-steps">
+      <button class="step-btn" bindtap="onBpmStep" data-delta="-5">−5</button>
+      <button class="step-btn" bindtap="onBpmStep" data-delta="-1">−1</button>
+      <button class="step-btn" bindtap="onBpmStep" data-delta="1">+1</button>
+      <button class="step-btn" bindtap="onBpmStep" data-delta="5">+5</button>
+    </view>
+    <slider class="bpm-slider" min="30" max="260" value="{{bpm}}"
+      bindchange="onBpmSlider" block-size="22"
+      activeColor="var(--accent)" backgroundColor="rgba(126,216,255,0.12)" />
+  </view>
+
+  <!-- 传输栏 -->
+  <view class="transport">
+    <button class="trans-btn tap-btn" bindtap="onTap">
+      <text class="trans-label">TAP</text>
+      <text wx:if="{{tapAccuracy > 0}}" class="tap-acc">{{tapAccuracy}}%</text>
+    </button>
+
+    <button class="trans-btn {{isPlaying ? 'stop-btn' : 'play-btn'}}" bindtap="onToggle">
+      <text class="play-symbol">{{isPlaying ? '■' : '▶'}}</text>
+    </button>
+
+    <button class="trans-btn save-btn" bindtap="onQuickSave">
+      <text class="trans-label">保存</text>
+    </button>
+  </view>
+
+  <!-- 运行统计 -->
+  <view class="run-stats">
+    <view class="stat">
+      <text class="stat-num">{{barsPlayed}}</text>
+      <text class="stat-cap">小节</text>
+    </view>
+    <view class="stat">
+      <text class="stat-num">{{bpm}}</text>
+      <text class="stat-cap">BPM</text>
+    </view>
+    <view class="stat">
+      <text class="stat-num muted">{{meterLabel}}</text>
+      <text class="stat-cap">拍号</text>
+    </view>
+    <view class="stat">
+      <text class="stat-num muted">{{trainingLabel}}</text>
+      <text class="stat-cap">模式</text>
+    </view>
+  </view>
+
+  <!-- 屏幕闪光 -->
+  <view wx:if="{{flashVisible}}" class="flash-overlay"></view>
+
+  <!-- ================================================
+       底部抽屉设置弹窗
+       ================================================ -->
+  <view wx:if="{{showSettings}}" class="drawer-overlay" bindtap="onCloseSettings" catchtouchmove="">
+    <view class="drawer-sheet" catchtap="preventClose">
+      <view class="drawer-handle">
+        <view class="handle-bar"></view>
+      </view>
+
+      <view class="drawer-header">
+        <text class="drawer-title">设置</text>
+        <view class="drawer-close" bindtap="onCloseSettings">✕</view>
+      </view>
+
+      <scroll-view class="drawer-body" scroll-y enhanced show-scrollbar="{{false}}">
+
+        <!-- 拍号 -->
+        <view class="set-card">
+          <view class="set-head">拍号</view>
+          <view class="form-row">
+            <text class="form-label">每小节拍数</text>
+            <view class="chip-row">
+              <view wx:for="{{meterOpts}}" wx:key="*this"
+                class="chip {{beatsPerBar === item ? 'on' : ''}}"
+                bindtap="onSetMeter" data-v="{{item}}">{{item}}</view>
+            </view>
+          </view>
+          <view class="form-row">
+            <text class="form-label">一拍等于</text>
+            <view class="note-chip-row">
+              <view wx:for="{{unitOpts}}" wx:key="v"
+                class="note-chip {{beatUnit === item.v ? 'on' : ''}}"
+                bindtap="onSetBeatUnit" data-v="{{item.v}}">
+                <view class="note-icon {{item.iconClass}}">
+                  <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+                  <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+                </view>
+                <text class="chip-label">{{item.n}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 切分音符 -->
+        <view class="set-card">
+          <view class="set-head">切分音符</view>
+          <view class="note-chip-row">
+            <view wx:for="{{subOpts}}" wx:key="v"
+              class="note-chip {{subdivision === item.v ? 'on' : ''}}"
+              bindtap="onSetSub" data-v="{{item.v}}">
+              <view wx:if="{{item.isTriplet}}" class="triplet-note">
+                <view class="note-icon {{item.iconClass}}">
+                  <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+                  <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+                </view>
+                <text class="triplet-badge">3</text>
+              </view>
+              <view wx:else class="note-icon {{item.iconClass}}">
+                <view wx:if="{{item.flagCount >= 1}}" class="note-flag"></view>
+                <view wx:if="{{item.flagCount >= 2}}" class="note-flag"></view>
+              </view>
+              <text class="chip-label">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 重音 -->
+        <view class="set-card">
+          <view class="set-head">重音设置<text class="hint">点击切换</text></view>
+          <view class="accent-row">
+            <view wx:for="{{accents}}" wx:key="index"
+              class="accent-btn {{item}}"
+              bindtap="onCycleAccent" data-i="{{index}}">
+              {{index + 1}}
+            </view>
+          </view>
+          <view class="legend">
+            <text><view class="leg-dot a"></view>重音</text>
+            <text><view class="leg-dot n"></view>普通</text>
+            <text><view class="leg-dot m"></view>静音</text>
+          </view>
+        </view>
+
+        <!-- 音色 -->
+        <view class="set-card">
+          <view class="set-head">音效</view>
+          <view class="chip-row">
+            <view wx:for="{{soundOpts}}" wx:key="v"
+              class="chip {{sound === item.v ? 'on' : ''}}"
+              bindtap="onSetSound" data-v="{{item.v}}">{{item.n}}</view>
+          </view>
+        </view>
+
+        <view class="drawer-spacer"></view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

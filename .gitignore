@@ -1,0 +1,13 @@
+# 微信小程序私有配置（含本地调试信息，不应提交）
+project.private.config.json
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

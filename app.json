@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/settings/settings",
+    "pages/training/training",
+    "pages/presets/presets"
+  ],
+  "window": {
+    "navigationBarTitleText": "节拍搭子",
+    "navigationBarBackgroundColor": "#0f1724",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#0f1724",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#78849b",
+    "selectedColor": "#7ed8ff",
+    "backgroundColor": "#0f1724",
+    "borderStyle": "black",
+    "fontSize": "12px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "节拍器",
+        "iconPath": "assets/tabbar/metro.png",
+        "selectedIconPath": "assets/tabbar/metro_active.png"
+      },
+      {
+        "pagePath": "pages/training/training",
+        "text": "训练",
+        "iconPath": "assets/tabbar/train.png",
+        "selectedIconPath": "assets/tabbar/train_active.png"
+      },
+      {
+        "pagePath": "pages/presets/presets",
+        "text": "预设",
+        "iconPath": "assets/tabbar/preset.png",
+        "selectedIconPath": "assets/tabbar/preset_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

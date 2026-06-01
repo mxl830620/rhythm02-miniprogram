@@ -1,0 +1,19 @@
+/* 训练页 — 即将推出 */
+.page {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24rpx 24rpx 120rpx;
+}
+.placeholder {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16rpx;
+}
+.icon { font-size: 96rpx; }
+.title {
+  font-size: 36rpx; font-weight: 700;
+  color: var(--text-primary);
+}
+.desc {
+  font-size: 26rpx;
+  color: var(--text-tertiary);
+}

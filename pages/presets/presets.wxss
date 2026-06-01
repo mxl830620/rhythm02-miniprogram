@@ -1,0 +1,118 @@
+/* 预设页 v0.8 */
+.page { padding: 24rpx 28rpx 140rpx; }
+
+/* 操作按钮 */
+.actions { display: flex; gap: 16rpx; margin-bottom: 24rpx; }
+.actions .btn { flex: 1; }
+
+.btn {
+  height: 88rpx;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  font-size: 28rpx; font-weight: 700;
+  background: rgba(255,255,255,0.08);
+  color: var(--text-secondary);
+  border: 1rpx solid var(--border);
+  min-height: 88rpx;
+}
+.btn-primary {
+  background: var(--play);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4rpx 16rpx rgba(34,197,94,0.22);
+}
+
+/* 命名表单 */
+.form-card {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg); padding: 24rpx;
+  margin-bottom: 24rpx; border: 1rpx solid var(--border);
+}
+.form-input {
+  width: 100%; height: 88rpx;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm); padding: 0 20rpx;
+  font-size: 28rpx; color: var(--text-primary);
+  margin-bottom: 16rpx; border: 1rpx solid var(--border);
+}
+.form-card .btn-primary { width: 100%; }
+
+/* 空状态 */
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 120rpx 20rpx;
+}
+.empty-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.empty-title {
+  font-size: 30rpx; font-weight: 700;
+  color: var(--text-secondary); margin-bottom: 8rpx;
+}
+.empty-hint { font-size: 24rpx; color: var(--text-tertiary); }
+
+/* 卡片列表 */
+.list { display: flex; flex-direction: column; gap: 14rpx; }
+
+.card {
+  padding: 24rpx;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1rpx solid var(--border);
+}
+
+/* 名称行：名称 + BPM */
+.card-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+.card-name {
+  font-size: 30rpx; font-weight: 700; color: var(--text-primary);
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  margin-right: 16rpx;
+}
+.card-bpm {
+  font-size: 36rpx; font-weight: 900; color: var(--accent);
+  white-space: nowrap; flex-shrink: 0;
+}
+.bpm-unit {
+  font-size: 22rpx; font-weight: 600; color: var(--text-tertiary);
+}
+
+/* 标签行 */
+.card-row {
+  display: flex; flex-wrap: wrap; gap: 10rpx;
+  margin-bottom: 16rpx;
+}
+.card-tag {
+  padding: 6rpx 16rpx;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.06);
+  border: 1rpx solid var(--border);
+  font-size: 22rpx; font-weight: 500;
+  color: var(--text-tertiary);
+}
+
+/* 操作行 */
+.card-actions {
+  display: flex; gap: 10rpx; justify-content: flex-end;
+}
+
+.btn-sm {
+  padding: 12rpx 28rpx;
+  border-radius: var(--radius-sm);
+  font-size: 24rpx; font-weight: 600;
+  background: rgba(255,255,255,0.08);
+  color: var(--text-secondary);
+  border: 1rpx solid var(--border);
+  min-height: 60rpx;
+  display: flex; align-items: center;
+}
+.btn-sm.primary {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(126,216,255,0.35);
+}
+.btn-sm.danger {
+  color: var(--danger);
+  border-color: var(--danger-dim);
+}

@@ -1,0 +1,188 @@
+/* ====== Rhythm 02 全局样式 v1.3 ====== */
+
+page {
+  /* 基础样式 */
+  background-color: var(--bg-base, #0f172a);
+  color: var(--text-primary, #e8f0fe);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+  font-size: 28rpx;
+  box-sizing: border-box;
+
+  /* 背景层级 */
+  --bg-deep: #080d18;
+  --bg-base: #0f172a;
+  --bg-elevated: #192134;
+  --surface: rgba(20, 31, 62, 0.45);
+
+  /* 前景文字 */
+  --text-primary: #e8f0fe;
+  --text-secondary: #a9c2e8;
+  --text-tertiary: #6b80a8;
+  --text-disabled: #3e5070;
+
+  /* 品牌强调 */
+  --accent: #7ed8ff;
+  --accent-dim: rgba(126, 216, 255, 0.12);
+  --accent-glow: rgba(126, 216, 255, 0.28);
+
+  /* 状态色 */
+  --play: #22c55e;
+  --stop: #ef4444;
+  --danger: #ff542a;
+
+  /* 边框 */
+  --border: rgba(109, 130, 180, 0.18);
+  --border-focus: rgba(126, 216, 255, 0.38);
+
+  /* 圆角系统 */
+  --radius-sm: 12rpx;
+  --radius-md: 18rpx;
+  --radius-lg: 24rpx;
+  --radius-pill: 999rpx;
+
+  /* 间距系统 */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 14rpx;
+  --spacing-md: 22rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 48rpx;
+}
+
+/* ========================================
+   音符图标（全局复用）
+   ======================================== */
+.note-icon {
+  --stem: 28rpx;
+  --head-w: 21rpx;
+  --head-h: 15rpx;
+  width: 42rpx;
+  height: 42rpx;
+  position: relative;
+  display: inline-block;
+  color: inherit;
+}
+
+.note-icon::before {
+  content: "";
+  position: absolute;
+  left: 7rpx;
+  bottom: 4rpx;
+  width: var(--head-w);
+  height: var(--head-h);
+  border: 2rpx solid currentColor;
+  border-radius: 50%;
+  transform: rotate(-18deg);
+  background: currentColor;
+}
+
+.note-half::before {
+  background: transparent;
+}
+
+.note-whole::before {
+  background: transparent;
+}
+
+.note-icon::after {
+  content: "";
+  position: absolute;
+  left: 25rpx;
+  bottom: 11rpx;
+  width: 3rpx;
+  height: var(--stem);
+  background: currentColor;
+  border-radius: 999rpx;
+}
+
+.note-whole::after {
+  display: none;
+}
+
+.note-flag {
+  position: absolute;
+  left: 27rpx;
+  top: 4rpx;
+  width: 14rpx;
+  height: 12rpx;
+  border-top: 3rpx solid currentColor;
+  border-right: 3rpx solid currentColor;
+  border-radius: 0 8rpx 0 0;
+  transform: skewY(18deg);
+}
+
+.note-flag+.note-flag {
+  top: 13rpx;
+}
+
+/* 三连音 */
+.triplet-note {
+  width: 52rpx;
+  height: 44rpx;
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  color: inherit;
+}
+
+.triplet-note .note-icon {
+  transform: translateY(4rpx) scale(0.9);
+}
+
+.triplet-badge {
+  position: absolute;
+  top: -2rpx;
+  left: 50%;
+  min-width: 18rpx;
+  height: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-elevated);
+  border: 1rpx solid currentColor;
+  border-radius: 999rpx;
+  color: var(--text-primary);
+  font-size: 14rpx;
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+/* 音符芯片通用 */
+.note-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.note-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  padding: 12rpx 20rpx;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1rpx solid var(--border);
+  transition: all 0.18s;
+  min-width: 100rpx;
+}
+
+.note-chip .chip-label {
+  font-size: 20rpx;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.note-chip.on {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  box-shadow: 0 0 14rpx rgba(126, 216, 255, 0.16);
+}
+
+.note-chip.on .chip-label {
+  color: var(--accent);
+}
+
+.note-chip:active {
+  opacity: 0.7;
+}

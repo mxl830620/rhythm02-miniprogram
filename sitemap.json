@@ -1,0 +1,7 @@
+{
+  "desc": "关于本文件如何在sitemap.json中起作用",
+  "rules": [{
+    "action": "allow",
+    "page": "*"
+  }]
+}

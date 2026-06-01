@@ -1,0 +1,45 @@
+<!-- 预设管理 v0.8 -->
+<view class="page">
+
+  <!-- 操作区 -->
+  <view class="actions">
+    <button class="btn btn-primary" bindtap="quickSave">快速保存</button>
+    <button class="btn" bindtap="toggleForm">命名存入</button>
+  </view>
+
+  <!-- 命名表单 -->
+  <view wx:if="{{showForm}}" class="form-card">
+    <input class="form-input" type="text" placeholder="例如：Funk 练习 / Verse 128"
+      value="{{newName}}" bindinput="onNameInput" maxlength="28" focus />
+    <button class="btn btn-primary" bindtap="confirmSave">确认保存</button>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{presets.length === 0}}" class="empty">
+    <text class="empty-icon">📭</text>
+    <text class="empty-title">还没有预设</text>
+    <text class="empty-hint">调好节拍后，点「快速保存」或「命名存入」</text>
+  </view>
+
+  <!-- 预设列表 -->
+  <view wx:if="{{presets.length > 0}}" class="list">
+    <view wx:for="{{presets}}" wx:key="index" class="card">
+      <!-- 名称行 -->
+      <view class="card-head">
+        <text class="card-name">{{item.name}}</text>
+        <text class="card-bpm">{{item.bpm}}<text class="bpm-unit"> BPM</text></text>
+      </view>
+      <!-- 参数行 -->
+      <view class="card-row">
+        <text class="card-tag">📐 {{item.beatsPerBar}}/{{item.beatUnit}}</text>
+        <text class="card-tag">🎵 {{item.subdivLabel || item.subdivision}}等分</text>
+        <text class="card-tag">🔊 {{item.soundLabel || item.sound}}</text>
+      </view>
+      <!-- 操作行 -->
+      <view class="card-actions">
+        <button class="btn-sm primary" bindtap="load" data-i="{{index}}">切换</button>
+        <button class="btn-sm danger" bindtap="remove" data-i="{{index}}">删除</button>
+      </view>
+    </view>
+  </view>
+</view>
